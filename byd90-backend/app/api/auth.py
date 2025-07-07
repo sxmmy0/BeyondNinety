@@ -5,6 +5,7 @@ from app.models.user import User
 from app.schemas.user import UserCreate, UserLogin, UserResponse
 from app.core.security import hash_password, verify_password, create_access_token
 from app.core.database import SessionLocal
+from app.core.dependencies import get_current_user
 
 auth_router = APIRouter()
 
@@ -21,9 +22,17 @@ async def signup(user: UserCreate, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered.")
 
     new_user = User(
-        email=user.email,
-        username=user.username,
-        hashed_password=hash_password(user.password),
+    email=user.email,
+    username=user.username,
+    hashed_password=hash_password(user.password),
+    full_name=user.full_name,
+    age=user.age,
+    location=user.location,
+    position=user.position,
+    training_focus=user.training_focus,
+    favourite_team=user.favourite_team,
+    current_team=user.current_team,
+    avatar_name=user.avatar_name,
     )
     db.add(new_user)
     await db.commit()
