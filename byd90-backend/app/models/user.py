@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 class User(Base):
@@ -19,3 +20,5 @@ class User(Base):
     favourite_team = Column(String, nullable=True)  # e.g. "Arsenal"
     current_team = Column(String, nullable=True)    # e.g. "Free Agent"
     avatar_name = Column(String, nullable=True)     # e.g. "Zion"
+    avatar = relationship("Avatar", back_populates="user", uselist=False)
+
