@@ -2,13 +2,13 @@ version: '3.9'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+    volumes:
+      - ./byd90/app:/code/app
+      - ./.env:/code/.env
     ports:
       - "8000:8000"
-    volumes:
-      - ./app:/code/app
-    env_file:
-      - .env
     depends_on:
       - db
 
